@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  kanbango-database:
+    image: postgres
+    ports:
+      - 5431:5432
+    environment:
+      POSTGRES_USER_FILE: /run/secrets/user
+      POSTGRES_PASSWORD_FILE: /run/secrets/pass
+      POSTGRES_DB_FILE: /run/secrets/db
+    volumes:
+      - ./database:/var/lib/postgresql/data
+    restart: always
+    secrets:
+      - pass
+      - user
+      - db
+
+secrets:
+  pass:
+    file: postgres-passwd.secret
+  user:
+    file: postgres-user.secret
+  db:
+    file: postgres-db.secret
