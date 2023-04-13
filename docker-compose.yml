@@ -19,8 +19,8 @@ services:
 
 secrets:
   pass:
-    file: postgres-passwd.secret
+    file: internal/secrets/postgres-passwd.secret
   user:
-    file: postgres-user.secret
+    file: internal/secrets/postgres-user.secret
   db:
-    file: postgres-db.secret
+    file: internal/secrets/postgres-db.secret
