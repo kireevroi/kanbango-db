@@ -1,8 +1,8 @@
 package db
 
 import (
-	"gorm.io/gorm"
 	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 type DB struct {
@@ -28,4 +28,9 @@ func (db *DB) GetUser(username string) (User, error) {
 	var u User
 	x := db.Where("username = ?", username).First(&u)
 	return u, x.Error
+}
+
+func (db *DB) SetSession(s Session) error {
+	x := db.Create(&s)
+	return x.Error
 }

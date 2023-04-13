@@ -2,7 +2,6 @@ package db
 
 import (
 	"gorm.io/gorm"
-	"github.com/google/uuid"
 )
 
 // Migration models
@@ -16,6 +15,6 @@ type User struct {
 
 type Session struct {
 	gorm.Model
-	Session uuid.UUID `gorm:"type:uuid;primary_key;"`
+	Session string `gorm:"primary_key;"`
 	User_ID uint 
 }
