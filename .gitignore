@@ -1,4 +1,4 @@
 *.secret
 database/*
-
+.env
 !.gitkeep
