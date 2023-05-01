@@ -25,6 +25,24 @@ services:
       options:
         max-size: "1m"
         max-file: "3"
+  
+  cache:
+    image: redis
+    restart: always
+    hostname: cache
+    container_name: kanbango-cache
+    expose:
+      - 6379
+    logging:
+        options:
+          max-size: "1m"
+          max-file: "3"
+    healthcheck:
+      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  
   auth:
     hostname: auth
     container_name: kanbango-auth
@@ -38,6 +56,10 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      cache:
+        condition: service_healthy
+    
+  
     
 
 secrets:
