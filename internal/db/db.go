@@ -1,6 +1,7 @@
 package db
 
 import (
+	"log"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -16,6 +17,9 @@ func NewDB() *DB {
 func (db *DB) Connect(URL string) error {
 	gormdb, err := gorm.Open(postgres.Open(URL), &gorm.Config{})
 	db.DB = gormdb
+	if err == nil {
+		log.Println("Connected to Postgres Database")
+	}
 	return err
 }
 

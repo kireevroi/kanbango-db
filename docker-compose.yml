@@ -1,26 +1,45 @@
 version: "3.9"
 
 services:
-  kanbango-database:
+  db:
     image: postgres
     ports:
       - 5431:5432
+    hostname: db
+    container_name: kanbango-db
     environment:
-      POSTGRES_USER_FILE: /run/secrets/user
+      POSTGRES_USER: kanbango
       POSTGRES_PASSWORD_FILE: /run/secrets/pass
-      POSTGRES_DB_FILE: /run/secrets/db
+      POSTGRES_DB: kanbango
     volumes:
       - ./database:/var/lib/postgresql/data
     restart: always
     secrets:
       - pass
-      - user
-      - db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -q --username=kanbango"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    logging:
+      options:
+        max-size: "1m"
+        max-file: "3"
+  auth:
+    hostname: auth
+    container_name: kanbango-auth
+    build: .
+    ports:
+      - 50051:50051
+    logging:
+      options:
+        max-size: "1m"
+        max-file: "3"
+    depends_on:
+      db:
+        condition: service_healthy
+    
 
 secrets:
   pass:
     file: internal/secrets/postgres-passwd.secret
-  user:
-    file: internal/secrets/postgres-user.secret
-  db:
-    file: internal/secrets/postgres-db.secret
