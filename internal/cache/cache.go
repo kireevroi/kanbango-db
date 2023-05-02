@@ -37,3 +37,8 @@ func (c *Cache) GetSession(key string) (string, error) {
 	val, err := c.Get(key).Result()
 	return val, err
 }
+
+func (c *Cache) DeleteSession(key string) (int, error) {
+	val, err := c.Del(key).Result()
+	return int(val), err
+}
