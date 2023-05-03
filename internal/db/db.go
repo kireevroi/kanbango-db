@@ -38,3 +38,8 @@ func (db *DB) SetSession(s Session) error {
 	x := db.Create(&s)
 	return x.Error
 }
+
+func (db *DB) DeleteSession(s Session) error {
+	x := db.Where("session = ?", s.Session).Delete(&Session{})
+	return x.Error
+}

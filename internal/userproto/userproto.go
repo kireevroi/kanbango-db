@@ -56,3 +56,11 @@ func (s *Server) LoginUser(ctx context.Context, in *LoginUserRequest) (*LoginUse
 	}
 	return &LoginUserResponse{Status: Status_STATUS_OK, Uuid: uid}, nil
 }
+
+func (s *Server)LogoutUser(ctx context.Context, in *LoginUserRequest) (*LoginUserResponse, error) {
+	if (in.Uuid != "") {
+		s.Cache.DeleteSession(in.Uuid)
+		s.DB.DeleteSession(db.Session{Session: in.Uuid})
+	}
+	return &LoginUserResponse{Status: Status_STATUS_OK, Uuid: ""}, nil
+}
