@@ -35,7 +35,8 @@ jobs:
       - run: apk add openssh
       - run: mkdir -p /root/.ssh
       - run: ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
-      - run: ls -la
+      - run: echo $POSTGRES_PWD
+      - run: touch ./internal/secrets/postgres-passwd.secret
       - run:
           name: Creating secret
           command: |
