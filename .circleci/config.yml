@@ -39,6 +39,10 @@ jobs:
           name: Creating secret
           command: |
             echo $POSTGRES_PWD > ./internal/secrets/postgres-passwd.secret
+      - run:
+          name: Creating .emv
+          command: |
+            echo $DBURL >> ./.env && echo $CACHEURL >> ./.env
       - run: 
           name: Deploying Kanbango auth module
           command: |
