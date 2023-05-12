@@ -20,9 +20,9 @@ func main() {
 	}
 	s := grpc.NewServer()
 	d := db.NewDB()
+	c := cache.NewCache()
 	onstart.LoadEnv()
 	d.Connect(os.Getenv("DBURL"))
-	c := cache.NewCache()
 	c.Connect(os.Getenv("CACHEURL"))
 	userproto.RegisterUserServiceServer(s, &userproto.Server{DB: d, Cache: c})
 	log.Printf("server listening at %v", lis.Addr())

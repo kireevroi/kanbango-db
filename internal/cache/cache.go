@@ -2,7 +2,7 @@ package cache
 
 import (
 	"time"
-
+	"log"
 	"github.com/go-redis/redis"
 )
 
@@ -20,7 +20,11 @@ func (c *Cache) Connect(url string) error {
 		Password: "",
 		DB: 0,
 	})
-	_, err := c.Ping().Result(); 
+	pong, err := c.Ping().Result();
+	if pong == "PONG" {
+		log.Println("Connected to Redis DB")
+	}
+
 	return err
 }
 
@@ -32,4 +36,9 @@ func (c *Cache) NewSession(key, value string) {
 func (c *Cache) GetSession(key string) (string, error) {
 	val, err := c.Get(key).Result()
 	return val, err
+}
+
+func (c *Cache) DeleteSession(key string) (int, error) {
+	val, err := c.Del(key).Result()
+	return int(val), err
 }
