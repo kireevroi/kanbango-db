@@ -35,6 +35,10 @@ jobs:
       - run: apk add openssh
       - run: mkdir -p /root/.ssh
       - run: ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
+      - run:
+          name: Creating secret
+          command: |
+            cat $POSTGRES_PWD > ./internal/secrets/postgres-passwd.secret
       - run: 
           name: Deploying Kanbango auth module
           command: |
