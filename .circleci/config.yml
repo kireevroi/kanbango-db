@@ -42,7 +42,7 @@ jobs:
       - run:
           name: Creating .emv
           command: |
-            echo $DBURL >> ./.env && echo $CACHEURL >> ./.env
+            echo "DBURL="$DBURL >> ./.env && echo "CACHEURL="$CACHEURL >> ./.env
       - run: 
           name: Deploying Kanbango auth module
           command: |
