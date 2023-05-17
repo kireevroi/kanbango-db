@@ -9,7 +9,7 @@ import (
 type DB struct {
 	*gorm.DB
 }
-
+//NewDB returns pointer to new Database
 func NewDB() *DB {
 	return &DB{}
 }
@@ -34,6 +34,12 @@ func (db *DB) GetUser(username string) (User, error) {
 	return u, x.Error
 }
 
+func (db *DB) GetUserIdByUuid(uuid string) (uint, error) {
+	var s Session
+	x := db.Where("session = ?", uuid).First(&s)
+	return s.User_ID, x.Error
+}
+
 func (db *DB) SetSession(s Session) error {
 	x := db.Create(&s)
 	return x.Error
@@ -43,3 +49,21 @@ func (db *DB) DeleteSession(s Session) error {
 	x := db.Where("session = ?", s.Session).Delete(&Session{})
 	return x.Error
 }
+
+func (db *DB) DeleteUser(User_ID uint) error {
+	x := db.Where("id = ?", User_ID).Delete(&User{})
+	return x.Error
+}
+
+func (db *DB) GetAllSessions(User_ID uint) ([]Session, error) {
+	var sessions []Session
+	x := db.Where("user_id = ?", User_ID).Find(&sessions)
+	return sessions, x.Error
+}
+
+func (db *DB) DeleteAllSessions(User_ID uint) error {
+	x := db.Where("user_id = ?", User_ID).Delete(&Session{})
+	return x.Error
+}
+
+
