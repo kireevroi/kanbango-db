@@ -21,7 +21,7 @@ func main() {
 	s := grpc.NewServer()
 	d := db.NewDB()
 	c := cache.NewCache()
-	onstart.LoadEnv(".env")
+	onstart.LoadEnv()
 	d.Connect(os.Getenv("DBURL"))
 	c.Connect(os.Getenv("CACHEURL"))
 	userproto.RegisterUserServiceServer(s, &userproto.Server{DB: d, Cache: c})

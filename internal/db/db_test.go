@@ -9,7 +9,7 @@ import (
 
 func TestGetAllSessions(t *testing.T) {
 	d := NewDB()
-	onstart.LoadEnv(".env")
+	onstart.LoadEnv()
 	d.Connect(os.Getenv("DBURLM"))
 	t.Log(os.Getenv("DBURLM"))
 	x, _ := d.GetAllSessions(1)
