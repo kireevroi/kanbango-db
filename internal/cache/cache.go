@@ -42,3 +42,4 @@ func (c *Cache) DeleteSession(key string) (int, error) {
 	val, err := c.Del(key).Result()
 	return int(val), err
 }
+
