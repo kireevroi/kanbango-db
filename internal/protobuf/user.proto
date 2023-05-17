@@ -21,7 +21,7 @@ message CreateUserRequest {
 }
 
 message CreateUserResponse { // Уникальность логина
-	Status status = 1;R
+	Status status = 1;
 }
 
 message LoginUserRequest {
